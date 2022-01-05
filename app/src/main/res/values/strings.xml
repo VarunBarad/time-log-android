@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Time Log</string>
+
+    <string name="title_activity_main">@string/app_name</string>
 </resources>
