@@ -53,6 +53,19 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 tools:text="8 entries" />
 
+            <TextView
+                android:id="@+id/textView_lastEntryTime"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:textAlignment="center"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textView_unintentional"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:text="Last entry: 5 days ago, 21:34" />
+
             <Button
                 android:id="@+id/button_addEntryIntentional"
                 android:text="Intentional"

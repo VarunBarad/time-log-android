@@ -11,10 +11,15 @@ import com.varunbarad.tlog.util.Dependencies
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.subscribeBy
 import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.time.temporal.ChronoField
+import java.time.temporal.ChronoUnit
 import java.util.UUID
 
 class MainActivity : AppCompatActivity() {
     private val serviceDisposables = CompositeDisposable()
+
+    private val timeFormatter = DateTimeFormatter.ofPattern("HH:mm")
 
     private lateinit var viewBinding: ActivityMainBinding
 
@@ -77,8 +82,34 @@ class MainActivity : AppCompatActivity() {
                         .filter { it.endTime > now.minusDays(1) }
                         .partition { it.category == EntryCategory.INTENTIONAL }
 
-                    viewBinding.textViewIntentional.text = "Intentional entries: ${intentionalEntries.size}"
-                    viewBinding.textViewUnintentional.text = "Unintentional entries: ${unintentionalEntries.size}"
+                    viewBinding.textViewIntentional.text =
+                        "Intentional entries: ${intentionalEntries.size}"
+                    viewBinding.textViewUnintentional.text =
+                        "Unintentional entries: ${unintentionalEntries.size}"
+
+                    val lastEntry = entries.maxByOrNull { it.endTime }
+
+                    val lastEntryText = if (lastEntry != null) {
+                        val lastEntryWasToday = lastEntry.endTime.toLocalDate() == now.toLocalDate()
+                        val lastEntryWasYesterday = lastEntry.endTime.toLocalDate().plusDays(1) == now.toLocalDate()
+
+                        when {
+                            lastEntryWasToday -> timeFormatter.format(lastEntry.endTime)
+                            lastEntryWasYesterday -> "Yesterday, ${timeFormatter.format(lastEntry.endTime)}"
+                            else -> {
+                                val daysOfDifference = ChronoUnit.DAYS.between(
+                                    now.toLocalDate(),
+                                    lastEntry.endTime.toLocalDate(),
+                                )
+
+                                "$daysOfDifference days ago, ${timeFormatter.format(lastEntry.endTime)}"
+                            }
+                        }
+                    } else {
+                        "No entries logged"
+                    }
+
+                    viewBinding.textViewLastEntryTime.text = "Last entry: $lastEntryText"
                 }
         )
     }
