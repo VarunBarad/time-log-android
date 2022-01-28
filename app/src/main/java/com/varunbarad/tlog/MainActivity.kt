@@ -98,8 +98,8 @@ class MainActivity : AppCompatActivity() {
                             lastEntryWasYesterday -> "Yesterday, ${timeFormatter.format(lastEntry.endTime)}"
                             else -> {
                                 val daysOfDifference = ChronoUnit.DAYS.between(
-                                    now.toLocalDate(),
                                     lastEntry.endTime.toLocalDate(),
+                                    now.toLocalDate(),
                                 )
 
                                 "$daysOfDifference days ago, ${timeFormatter.format(lastEntry.endTime)}"
