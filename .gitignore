@@ -4,4 +4,7 @@ local.properties
 .idea/
 .DS_Store
 build/
+captures/
 Signing-Keystore.jks
+.externalNativeBuild
+.cxx
