@@ -2,7 +2,6 @@ package com.varunbarad.tlog
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.databinding.DataBindingUtil
 import com.google.android.material.snackbar.Snackbar
 import com.varunbarad.tlog.databinding.ActivityMainBinding
 import com.varunbarad.tlog.external_services.local_database.models.DbLogEntry
@@ -25,7 +24,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        viewBinding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(viewBinding.root)
         setSupportActionBar(viewBinding.toolbar)
     }
 
